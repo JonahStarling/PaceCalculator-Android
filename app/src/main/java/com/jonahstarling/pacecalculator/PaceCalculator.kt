@@ -36,6 +36,22 @@ class PaceCalculator {
 
     }
 
+    fun switchDistanceUnit() {
+        if (distanceUnit.name == Distances.oneMile.name) {
+            distanceUnit = Distances.oneKilometer
+        } else if (distanceUnit.name == Distances.oneKilometer.name) {
+            distanceUnit = Distances.oneMile
+        }
+    }
+
+    fun switchPaceUnit() {
+        if (paceUnit.name == Distances.oneMile.name) {
+            paceUnit = Distances.oneKilometer
+        } else if (paceUnit.name == Distances.oneKilometer.name) {
+            paceUnit = Distances.oneMile
+        }
+    }
+
     fun clear() {
         timeSeconds = null
         distanceInMiles = null

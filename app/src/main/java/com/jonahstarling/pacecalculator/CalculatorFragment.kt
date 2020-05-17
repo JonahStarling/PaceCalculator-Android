@@ -78,15 +78,17 @@ class CalculatorFragment: Fragment() {
     }
 
     private fun distanceUnitTapped() {
-
+        paceCalculator.switchDistanceUnit()
+        distanceUnit.text = paceCalculator.distanceUnit.name
     }
 
     private fun paceUnitTapped() {
-
+        paceCalculator.switchPaceUnit()
+        paceUnit.text = paceCalculator.paceUnit.name
     }
 
     private fun calculateTapped() {
-
+        // TODO
     }
 
     private fun resetTapped() {

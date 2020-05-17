@@ -76,8 +76,10 @@
         android:textStyle="bold"
         android:layout_marginEnd="20dp"
         android:gravity="end"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackground"
         app:layout_constraintBaseline_toBaselineOf="@id/distanceUnitTitle"
-        app:layout_constraintStart_toEndOf="@id/distanceUnitTitle"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <View
