@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/timeSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_section"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/timeHoursEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:hint="@string/_0"
+        android:gravity="end"
+        android:background="@null"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/timeSectionTitle"
+        app:layout_constraintEnd_toStartOf="@id/timeHoursMinutesColon"
+        app:layout_constraintBaseline_toBaselineOf="@id/timeSectionTitle"/>
+
+    <TextView
+        android:id="@+id/timeHoursMinutesColon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/colon"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@id/timeMinutesEditText"
+        app:layout_constraintBaseline_toBaselineOf="@id/timeSectionTitle"/>
+
+    <EditText
+        android:id="@+id/timeMinutesEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:hint="@string/_00"
+        android:background="@null"
+        app:layout_constraintEnd_toStartOf="@id/timeMinutesSecondsColon"
+        app:layout_constraintBaseline_toBaselineOf="@id/timeSectionTitle"/>
+
+    <TextView
+        android:id="@+id/timeMinutesSecondsColon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/colon"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toStartOf="@id/timeSecondsEditText"
+        app:layout_constraintBaseline_toBaselineOf="@id/timeSectionTitle"/>
+
+    <EditText
+        android:id="@+id/timeSecondsEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:layout_marginEnd="20dp"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:hint="@string/_00"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/timeSectionTitle"/>
+
+    <View
+        android:id="@+id/timeSectionBar"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/barColor"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timeSectionTitle"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

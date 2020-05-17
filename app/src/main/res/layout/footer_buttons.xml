@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Space
+        android:id="@+id/calculateSpace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="0.4"
+        app:layout_constraintTop_toTopOf="@id/calculateButton"
+        app:layout_constraintBottom_toBottomOf="@id/calculateButton"
+        app:layout_constraintStart_toEndOf="@id/calculateButton"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/calculateButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonColor"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/calculate_button"
+        android:textStyle="bold"
+        android:textSize="21sp"
+        android:padding="12dp"
+        app:layout_constraintHorizontal_weight="0.6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/calculateSpace"/>
+
+    <Space
+        android:id="@+id/resetSpace"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="0.4"
+        app:layout_constraintTop_toTopOf="@id/resetButton"
+        app:layout_constraintBottom_toBottomOf="@id/resetButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/resetButton" />
+
+    <Button
+        android:id="@+id/resetButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/buttonColor"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/reset_button"
+        android:textStyle="bold"
+        android:textSize="21sp"
+        android:padding="12dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintHorizontal_weight="0.6"
+        app:layout_constraintTop_toBottomOf="@id/calculateButton"
+        app:layout_constraintStart_toEndOf="@id/resetSpace"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

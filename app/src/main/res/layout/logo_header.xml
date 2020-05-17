@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Space
+        android:id="@+id/jonahSpace"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        app:layout_constraintBottom_toTopOf="@id/paceText"
+        app:layout_constraintStart_toStartOf="@id/paceText"
+        app:layout_constraintEnd_toEndOf="@id/paceText"/>
+
+    <TextView
+        android:id="@+id/jonahText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/logo_jonahs"
+        android:textStyle="italic"
+        android:textSize="17dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="@id/jonahSpace"
+        app:layout_constraintStart_toStartOf="@id/paceText"
+        app:layout_constraintEnd_toEndOf="@id/paceText"
+        tools:ignore="SpUsage"/>
+
+    <TextView
+        android:id="@+id/paceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logo_pace"
+        android:textSize="48dp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpUsage" />
+
+    <Space
+        android:id="@+id/calculatorSpace"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        app:layout_constraintTop_toBottomOf="@id/paceText"
+        app:layout_constraintStart_toStartOf="@id/paceText"
+        app:layout_constraintEnd_toEndOf="@id/paceText"/>
+
+    <TextView
+        android:id="@+id/calculatorText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/logo_calculator"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@id/calculatorSpace"
+        app:layout_constraintStart_toStartOf="@id/paceText"
+        app:layout_constraintEnd_toEndOf="@id/paceText"
+        tools:ignore="SpUsage" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

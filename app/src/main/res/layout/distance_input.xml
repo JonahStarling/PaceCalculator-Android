@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/distanceSectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distance_section"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/distanceEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="32sp"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:hint="@string/_0"
+        android:gravity="end"
+        android:background="@null"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@id/distanceSectionTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@id/distanceSectionTitle"/>
+
+    <View
+        android:id="@+id/distanceSectionBar1"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/barColor"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/distanceSectionTitle"/>
+
+    <View
+        android:id="@+id/distanceSectionBar2"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:background="@color/barColor"
+        android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="@id/distanceSectionBar1"
+        app:layout_constraintTop_toBottomOf="@id/distanceSectionBar1"
+        app:layout_constraintBottom_toBottomOf="@id/distanceSectionBar3"/>
+
+    <TextView
+        android:id="@+id/distanceUnitTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/unit"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toBottomOf="@id/distanceSectionBar1"
+        app:layout_constraintBottom_toTopOf="@id/distanceSectionBar3"
+        app:layout_constraintStart_toEndOf="@id/distanceSectionBar2"/>
+
+    <TextView
+        android:id="@+id/distanceUnit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/mile"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:layout_marginEnd="20dp"
+        android:gravity="end"
+        app:layout_constraintBaseline_toBaselineOf="@id/distanceUnitTitle"
+        app:layout_constraintStart_toEndOf="@id/distanceUnitTitle"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <View
+        android:id="@+id/distanceSectionBar3"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@color/barColor"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@id/distanceSectionBar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/distanceSectionBar2"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
