@@ -5,35 +5,73 @@ class PaceCalculator {
     var timeSeconds: Float? = null
     var distanceInMiles: Float? = null
     var distanceUnit: Distance = Distances.oneMile
-    var paceSeconds: Float? = null
+    var paceSecondsPerMile: Float? = null
     var paceUnit: Distance = Distances.oneMile
 
-    private fun timePresent() {
-        // TODO
+    enum class ValueCalculated {
+        TIME,
+        DISTANCE,
+        PACE,
+        ERROR
     }
 
-    private fun distancePresent() {
-        // TODO
+    private fun timePresent(): Boolean {
+        return timeSeconds != null
     }
 
-    private fun pacePresent() {
-        // TODO
+    fun distancePresent(): Boolean {
+        return distanceInMiles != null
     }
 
-    private fun calculateTime() {
-        // TODO
+    fun pacePresent(): Boolean {
+        return paceSecondsPerMile != null
     }
 
-    private fun calculateDistance() {
-        // TODO
+    private fun calculateTime(): Boolean {
+        paceSecondsPerMile?.let { pace ->
+            distanceInMiles?.let { distance ->
+                timeSeconds = pace * distance
+                return true
+            }
+        }
+        return false
     }
 
-    private fun calculatePace() {
-        // TODO
+    private fun calculateDistance(): Boolean {
+        timeSeconds?.let { time ->
+            paceSecondsPerMile?.let { pace ->
+                distanceInMiles = time / pace
+                return true
+            }
+        }
+        return false
     }
 
-    fun calculateMissing() {
+    fun calculatePace(): Boolean {
+        timeSeconds?.let { time ->
+            distanceInMiles?.let { distance ->
+                paceSecondsPerMile = time / distance
+                return true
+            }
+        }
+        return false
+    }
 
+    fun calculateMissing(): ValueCalculated {
+        if (distancePresent() && pacePresent() && !timePresent()) {
+            if (calculateTime()) {
+                return ValueCalculated.TIME
+            }
+        } else if (timePresent() && pacePresent() && !distancePresent()) {
+            if (calculateDistance()) {
+                return ValueCalculated.DISTANCE
+            }
+        } else if (timePresent() && distancePresent() && !pacePresent()) {
+            if (calculatePace()) {
+                return ValueCalculated.PACE
+            }
+        }
+        return ValueCalculated.ERROR
     }
 
     fun switchDistanceUnit() {
@@ -55,6 +93,6 @@ class PaceCalculator {
     fun clear() {
         timeSeconds = null
         distanceInMiles = null
-        paceSeconds = null
+        paceSecondsPerMile = null
     }
 }

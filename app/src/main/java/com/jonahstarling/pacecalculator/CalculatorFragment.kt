@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.DecelerateInterpolator
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.calculator_fields.*
 import kotlinx.android.synthetic.main.distance_input.*
@@ -80,32 +81,169 @@ class CalculatorFragment: Fragment() {
     private fun distanceUnitTapped() {
         paceCalculator.switchDistanceUnit()
         distanceUnit.text = paceCalculator.distanceUnit.name
+        if (paceCalculator.distancePresent()) {
+            setDistanceResult()
+        }
     }
 
     private fun paceUnitTapped() {
         paceCalculator.switchPaceUnit()
         paceUnit.text = paceCalculator.paceUnit.name
+        if (paceCalculator.pacePresent() && paceCalculator.calculatePace()) {
+            setPaceResult()
+        }
     }
 
     private fun calculateTapped() {
-        // TODO
+        getTimeInput()
+        getDistanceInput()
+        getPaceInput()
+
+        when (paceCalculator.calculateMissing()) {
+            PaceCalculator.ValueCalculated.TIME -> setTimeResult()
+            PaceCalculator.ValueCalculated.DISTANCE -> setDistanceResult()
+            PaceCalculator.ValueCalculated.PACE -> setPaceResult()
+            PaceCalculator.ValueCalculated.ERROR -> {
+                Toast.makeText(context, "Fill in only 2 of the 3", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getTimeInput() {
+        var timeSeconds = 0f
+        if (!timeHoursEditText.text.isNullOrEmpty()) {
+            timeSeconds += timeHoursEditText.text.toString().toFloat() * secondsInHour
+        }
+        if (!timeMinutesEditText.text.isNullOrEmpty()) {
+            timeSeconds += timeMinutesEditText.text.toString().toFloat() * secondsInMinute
+        }
+        if (!timeSecondsEditText.text.isNullOrEmpty()) {
+            timeSeconds += timeSecondsEditText.text.toString().toFloat()
+        }
+        if (timeSeconds > 0f) {
+            paceCalculator.timeSeconds = timeSeconds
+        } else {
+            paceCalculator.timeSeconds = null
+        }
+    }
+
+    private fun setTimeResult() {
+        paceCalculator.timeSeconds?.let { timeSeconds ->
+            var secondsLeft = timeSeconds
+
+            var hours = (secondsLeft / secondsInHour).toInt().toFloat()
+            secondsLeft -= hours * secondsInHour
+
+            var minutes = (secondsLeft / secondsInMinute).toInt().toFloat()
+            secondsLeft -= minutes * secondsInMinute
+
+            var secondsString = FormatHelper.seconds(secondsLeft)
+            if (secondsString == "60.00") {
+                secondsString = "00"
+                minutes += 1f
+            }
+            var minutesString = FormatHelper.minutes(minutes)
+            if (minutesString == "60.00") {
+                minutesString = "00"
+                hours += 1f
+            }
+
+            timeHoursEditText.setText(FormatHelper.hours(hours))
+            timeMinutesEditText.setText(minutesString)
+            timeSecondsEditText.setText(secondsString)
+        } ?: clearTimeFields()
+    }
+
+    private fun getDistanceInput() {
+        var distanceInMiles: Float? = null
+        if (paceCalculator.distanceUnit.name == Distances.oneMile.name) {
+            distanceInMiles = distanceEditText.text.toString().toFloatOrNull()
+        } else if (paceCalculator.distanceUnit.name == Distances.oneKilometer.name) {
+            val distanceInput = distanceEditText.text.toString().toFloatOrNull()
+            distanceInput?.let {
+                distanceInMiles = it * Distances.oneKilometer.lengthInMiles
+            }
+        }
+        paceCalculator.distanceInMiles = distanceInMiles
+    }
+
+    private fun setDistanceResult() {
+        paceCalculator.distanceInMiles?.let { distanceInMiles ->
+            if (paceCalculator.distanceUnit.name == Distances.oneMile.name) {
+                distanceEditText.setText(FormatHelper.distance(distanceInMiles))
+            } else if (paceCalculator.distanceUnit.name == Distances.oneKilometer.name) {
+                distanceEditText.setText(FormatHelper.distance(distanceInMiles / paceCalculator.distanceUnit.lengthInMiles))
+            }
+        } ?: clearDistanceFields()
+    }
+
+    private fun getPaceInput() {
+        var paceSecondsPerMile: Float? = null
+        var paceSecondsFromInput = 0f
+        if (!paceMinutesEditText.text.isNullOrEmpty()) {
+            paceSecondsFromInput += paceMinutesEditText.text.toString().toFloat() * secondsInMinute
+        }
+        if (!paceSecondsEditText.text.isNullOrEmpty()) {
+            paceSecondsFromInput += paceSecondsEditText.text.toString().toFloat()
+        }
+        if (paceSecondsFromInput > 0f) {
+            if (paceCalculator.paceUnit.name == Distances.oneMile.name) {
+                paceSecondsPerMile = paceSecondsFromInput
+            } else if (paceCalculator.paceUnit.name == Distances.oneKilometer.name) {
+                paceSecondsPerMile = paceSecondsFromInput / paceCalculator.paceUnit.lengthInMiles
+            }
+        }
+        paceCalculator.paceSecondsPerMile = paceSecondsPerMile
+    }
+
+    private fun setPaceResult() {
+        paceCalculator.paceSecondsPerMile?.let {
+            var secondsLeft = it
+            if (paceCalculator.paceUnit.name == Distances.oneKilometer.name) {
+                secondsLeft = it * paceCalculator.paceUnit.lengthInMiles
+            }
+            var minutes = (secondsLeft / secondsInMinute).toInt().toFloat()
+            secondsLeft -= minutes * secondsInMinute
+
+            var secondsString = FormatHelper.seconds(secondsLeft)
+            if (secondsString == "60.00") {
+                secondsString = "00"
+                minutes += 1f
+            }
+
+            paceSecondsEditText.setText(secondsString)
+            paceMinutesEditText.setText(FormatHelper.paceMinutes(minutes))
+        } ?: clearPaceFields()
+    }
+
+    private fun clearTimeFields() {
+        timeHoursEditText.setText("")
+        timeMinutesEditText.setText("")
+        timeSecondsEditText.setText("")
+    }
+
+    private fun clearDistanceFields() {
+        distanceEditText.setText("")
+    }
+
+    private fun clearPaceFields() {
+        paceMinutesEditText.setText("")
+        paceSecondsEditText.setText("")
     }
 
     private fun resetTapped() {
         paceCalculator.clear()
 
-        timeHoursEditText.setText("")
-        timeMinutesEditText.setText("")
-        timeSecondsEditText.setText("")
-
-        distanceEditText.setText("")
-
-        paceMinutesEditText.setText("")
-        paceSecondsEditText.setText("")
+        clearTimeFields()
+        clearDistanceFields()
+        clearPaceFields()
     }
 
     companion object {
         val TAG = CalculatorFragment::class.java.simpleName
+
+        private const val secondsInMinute = 60
+        private const val secondsInHour = 3600
 
         fun newInstance() = CalculatorFragment()
     }
