@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.DecelerateInterpolator
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.calculator_fields.*
 import kotlinx.android.synthetic.main.distance_input.*
@@ -15,6 +18,7 @@ import kotlinx.android.synthetic.main.footer_buttons.*
 import kotlinx.android.synthetic.main.fragment_calculator.*
 import kotlinx.android.synthetic.main.pace_input.*
 import kotlinx.android.synthetic.main.time_input.*
+
 
 class CalculatorFragment: Fragment() {
 
@@ -30,6 +34,14 @@ class CalculatorFragment: Fragment() {
         paceUnit.setOnClickListener { paceUnitTapped() }
         calculateButton.setOnClickListener { calculateTapped() }
         resetButton.setOnClickListener { resetTapped() }
+
+        timeHoursEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.TIME)
+        timeMinutesEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.TIME)
+        timeSecondsEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.TIME)
+        distanceEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.DISTANCE)
+        paceMinutesEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.PACE)
+        paceSecondsEditText.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.PACE)
+        view.onFocusChangeListener = InputFocusChangeListener(PaceCalculator.ValueCalculated.ERROR)
 
         view.viewTreeObserver.addOnGlobalLayoutListener(object:
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -237,6 +249,36 @@ class CalculatorFragment: Fragment() {
         clearTimeFields()
         clearDistanceFields()
         clearPaceFields()
+    }
+
+    fun hideKeyboard(view: View) {
+        context?.let {
+            val inputMethodManager = getSystemService(
+                it,
+                InputMethodManager::class.java
+            )!!
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    inner class InputFocusChangeListener(private val valueChanged: PaceCalculator.ValueCalculated): View.OnFocusChangeListener {
+        override fun onFocusChange(v: View?, hasFocus: Boolean) {
+            when (valueChanged) {
+                PaceCalculator.ValueCalculated.TIME -> getTimeInput()
+                PaceCalculator.ValueCalculated.DISTANCE -> getDistanceInput()
+                PaceCalculator.ValueCalculated.PACE -> getPaceInput()
+                PaceCalculator.ValueCalculated.ERROR -> {
+                    // Do nothing?
+                }
+            }
+            if (hasFocus) {
+                if (v !is EditText) {
+                    v?.let {
+                        hideKeyboard(it)
+                    }
+                }
+            }
+        }
     }
 
     companion object {

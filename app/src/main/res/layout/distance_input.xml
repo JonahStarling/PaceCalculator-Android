@@ -24,6 +24,8 @@
         android:textSize="32sp"
         android:importantForAutofill="no"
         android:inputType="numberDecimal"
+        android:imeOptions="actionNext"
+        android:nextFocusForward="@id/paceMinutesEditText"
         android:maxLength="5"
         android:hint="@string/_0"
         android:gravity="end"
