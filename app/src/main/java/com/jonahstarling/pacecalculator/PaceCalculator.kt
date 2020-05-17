@@ -35,4 +35,10 @@ class PaceCalculator {
     fun calculateMissing() {
 
     }
+
+    fun clear() {
+        timeSeconds = null
+        distanceInMiles = null
+        paceSeconds = null
+    }
 }

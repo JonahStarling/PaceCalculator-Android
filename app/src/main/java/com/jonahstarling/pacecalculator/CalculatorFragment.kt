@@ -9,8 +9,11 @@ import android.view.ViewTreeObserver
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.calculator_fields.*
+import kotlinx.android.synthetic.main.distance_input.*
 import kotlinx.android.synthetic.main.footer_buttons.*
 import kotlinx.android.synthetic.main.fragment_calculator.*
+import kotlinx.android.synthetic.main.pace_input.*
+import kotlinx.android.synthetic.main.time_input.*
 
 class CalculatorFragment: Fragment() {
 
@@ -21,6 +24,11 @@ class CalculatorFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        distanceUnit.setOnClickListener { distanceUnitTapped() }
+        paceUnit.setOnClickListener { paceUnitTapped() }
+        calculateButton.setOnClickListener { calculateTapped() }
+        resetButton.setOnClickListener { resetTapped() }
 
         view.viewTreeObserver.addOnGlobalLayoutListener(object:
             ViewTreeObserver.OnGlobalLayoutListener {
@@ -67,6 +75,31 @@ class CalculatorFragment: Fragment() {
             resetButton.x = resetStartX - ((resetStartX - (view.width - resetButton.width)) * it.animatedValue as Float)
         }
         calculatorAnimator.start()
+    }
+
+    private fun distanceUnitTapped() {
+
+    }
+
+    private fun paceUnitTapped() {
+
+    }
+
+    private fun calculateTapped() {
+
+    }
+
+    private fun resetTapped() {
+        paceCalculator.clear()
+
+        timeHoursEditText.setText("")
+        timeMinutesEditText.setText("")
+        timeSecondsEditText.setText("")
+
+        distanceEditText.setText("")
+
+        paceMinutesEditText.setText("")
+        paceSecondsEditText.setText("")
     }
 
     companion object {
